@@ -35,7 +35,7 @@ packages/
   core/        OpenAPI 3.x → tool manifest compiler
   runtime/     Executor, security guard, audit log, MCP transports
   inspector/   Zero-build inspector UI served by the HTTP runtime
-  cli/         mcpforge command line interface
+  cli/         mcpforge-cli package (binary: mcpforge)
 examples/      Demo OpenAPI document
 ```
 
@@ -69,6 +69,30 @@ Look for issues labeled `good first issue`. Good candidates include:
 - Improving error messages.
 - Adding a new inspector convenience feature.
 - Documenting a client setup (Claude Desktop, Cursor, VS Code, Windsurf).
+
+## Releasing
+
+The publishable package is `mcpforge-cli` (the binary is still `mcpforge`). The `mcpforge` name is already taken on npm.
+
+1. Bump `version` in `packages/cli/package.json`.
+2. Update `CHANGELOG.md`.
+3. Commit the release prep.
+4. Create and push the tag:
+
+   ```bash
+   git tag -a v0.1.1 -m "MCPForge v0.1.1"
+   git push origin v0.1.1
+   ```
+
+5. Publish manually:
+
+   ```bash
+   npm login
+   npm run release
+   ```
+
+   Or configure an `NPM_TOKEN` repository secret and let
+   `.github/workflows/release.yml` publish on tag pushes.
 
 ## Security
 
