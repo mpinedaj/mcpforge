@@ -7,11 +7,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build -w @mcpforge/shared && npm run build -w @mcpforge/inspector && npm run build -w @mcpforge/core && npm run build -w @mcpforge/runtime && npm run build -w mcpforge",
+    "build": "npm run build -w @mcpforge/shared && npm run build -w @mcpforge/inspector && npm run build -w @mcpforge/core && npm run build -w @mcpforge/runtime && npm run build -w mcpforge-cli",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "demo": "npm run build && node packages/cli/dist/index.js generate examples/petstore.yaml -o examples/petstore.mcpforge.json && node packages/cli/dist/index.js inspect --manifest examples/petstore.mcpforge.json"
+    "demo": "npm run build && node packages/cli/dist/index.js generate examples/petstore.yaml -o examples/petstore.mcpforge.json && node packages/cli/dist/index.js inspect --manifest examples/petstore.mcpforge.json",
+    "release": "npm run build && npm publish -w mcpforge-cli --access public",
+    "release:dry": "npm run build && npm publish -w mcpforge-cli --dry-run"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

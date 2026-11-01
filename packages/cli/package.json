@@ -1,5 +1,5 @@
 {
-  "name": "mcpforge",
+  "name": "mcpforge-cli",
   "version": "0.1.0",
   "description": "Turn any API into a secure MCP server in one command.",
   "type": "module",
@@ -7,7 +7,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "mcpforge": "./dist/index.js"
+    "mcpforge": "dist/index.js"
   },
   "exports": {
     ".": {
@@ -19,7 +19,37 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "prepublishOnly": "tsup"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "openapi",
+    "api",
+    "cli",
+    "ai",
+    "agents",
+    "llm",
+    "claude",
+    "cursor"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpinedaj/mcpforge.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/mpinedaj/mcpforge#readme",
+  "bugs": {
+    "url": "https://github.com/mpinedaj/mcpforge/issues"
+  },
+  "author": "Martin Pineda",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
