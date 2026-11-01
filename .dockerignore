@@ -1,0 +1,8 @@
+node_modules
+dist
+.git
+.github
+.mcpforge
+coverage
+*.log
+examples/*.mcpforge.json

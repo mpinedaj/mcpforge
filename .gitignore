@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.mcpforge/
+examples/*.mcpforge.json
+coverage/
+.DS_Store
+*.log
+.env

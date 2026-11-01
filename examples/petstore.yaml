@@ -1,0 +1,146 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore
+  description: A sample API used by MCPForge demos and tests.
+  version: 1.0.0
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+  - name: pet
+    description: Everything about pets
+paths:
+  /pet/findByStatus:
+    get:
+      tags: [pet]
+      summary: Finds pets by status
+      description: Multiple status values can be provided with comma separated strings.
+      operationId: findPetsByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          schema:
+            type: string
+            enum: [available, pending, sold]
+            default: available
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
+  /pet/{petId}:
+    get:
+      tags: [pet]
+      summary: Find pet by ID
+      description: Returns a single pet.
+      operationId: getPetById
+      parameters:
+        - name: petId
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        "404":
+          description: Pet not found
+    delete:
+      tags: [pet]
+      summary: Deletes a pet
+      operationId: deletePet
+      parameters:
+        - name: petId
+          in: path
+          description: Pet id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: api_key
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Pet deleted
+  /pet:
+    post:
+      tags: [pet]
+      summary: Add a new pet to the store
+      operationId: addPet
+      requestBody:
+        description: Pet object that needs to be added to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+  /store/inventory:
+    get:
+      tags: [store]
+      summary: Returns pet inventories by status
+      operationId: getInventory
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+components:
+  schemas:
+    Pet:
+      type: object
+      required: [name]
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: doggie
+        category:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        photoUrls:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        status:
+          type: string
+          enum: [available, pending, sold]

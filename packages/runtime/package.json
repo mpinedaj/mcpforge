@@ -1,0 +1,27 @@
+{
+  "name": "@mcpforge/runtime",
+  "version": "0.1.0",
+  "description": "Secure MCP runtime for MCPForge manifests.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean"
+  },
+  "dependencies": {
+    "@mcpforge/inspector": "0.1.0",
+    "@mcpforge/shared": "0.1.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^4.6.7"
+  }
+}

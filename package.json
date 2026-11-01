@@ -1,0 +1,26 @@
+{
+  "name": "mcpforge-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @mcpforge/shared && npm run build -w @mcpforge/inspector && npm run build -w @mcpforge/core && npm run build -w @mcpforge/runtime && npm run build -w mcpforge",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "demo": "npm run build && node packages/cli/dist/index.js generate examples/petstore.yaml -o examples/petstore.mcpforge.json && node packages/cli/dist/index.js inspect --manifest examples/petstore.mcpforge.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "mcpforge",
+  "version": "0.1.0",
+  "description": "Turn any API into a secure MCP server in one command.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "mcpforge": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.1.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "commander": "^12.1.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@mcpforge/core": "0.1.0",
+    "@mcpforge/inspector": "0.1.0",
+    "@mcpforge/runtime": "0.1.0",
+    "@mcpforge/shared": "0.1.0"
+  }
+}
