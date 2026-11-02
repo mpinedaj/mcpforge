@@ -1,5 +1,5 @@
 {
-  "name": "mcpforge-cli",
+  "name": "@x123martin/mcpforge-cli",
   "version": "0.1.0",
   "description": "Turn any API into a secure MCP server in one command.",
   "type": "module",

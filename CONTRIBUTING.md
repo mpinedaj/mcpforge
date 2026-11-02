@@ -72,7 +72,7 @@ Look for issues labeled `good first issue`. Good candidates include:
 
 ## Releasing
 
-The publishable package is `mcpforge-cli` (the binary is still `mcpforge`). The `mcpforge` name is already taken on npm.
+The publishable package is `@x123martin/mcpforge-cli` (the binary is still `mcpforge`). The `mcpforge` name is already taken on npm.
 
 1. Bump `version` in `packages/cli/package.json`.
 2. Update `CHANGELOG.md`.
