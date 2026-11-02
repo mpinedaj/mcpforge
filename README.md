@@ -3,19 +3,19 @@
 **Turn any API into a secure MCP server in one command.**
 
 [![CI](https://github.com/mpinedaj/mcpforge/actions/workflows/ci.yml/badge.svg)](https://github.com/mpinedaj/mcpforge/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/mcpforge-cli.svg)](https://www.npmjs.com/package/mcpforge-cli)
+[![npm](https://img.shields.io/npm/v/@x123martin/mcpforge-cli.svg)](https://www.npmjs.com/package/@x123martin/mcpforge-cli)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org)
 
 MCPForge compiles an OpenAPI document into a ready-to-run [Model Context Protocol](https://modelcontextprotocol.io) server with typed tools, auth passthrough, read-only mode, rate limits and an audit log. No boilerplate, no hand-written tool schemas.
 
 ```bash
-npx mcpforge-cli init ./openapi.yaml
+npx @x123martin/mcpforge-cli init ./openapi.yaml
 # [mcpforge] imported 42 tools from ./openapi.yaml
 # [mcpforge] base URL: https://api.example.com
 # [mcpforge] wrote mcpforge.config.json
 
-npx mcpforge-cli inspect
+npx @x123martin/mcpforge-cli inspect
 # [mcpforge] inspector:    http://127.0.0.1:7331
 # [mcpforge] MCP endpoint: http://127.0.0.1:7331/mcp
 ```
@@ -26,13 +26,13 @@ Open the inspector, pick a tool, and call your API. Then point Claude Desktop, C
 
 <!-- Run `vhs docs/demo.tape` to generate docs/demo.gif, then replace this block with the image. -->
 ```text
-$ npx mcpforge-cli generate examples/petstore.yaml -o examples/petstore.mcpforge.json
+$ npx @x123martin/mcpforge-cli generate examples/petstore.yaml -o examples/petstore.mcpforge.json
 [mcpforge] wrote 5 tools to examples/petstore.mcpforge.json
 [mcpforge] source: Swagger Petstore v1.0.0
 [mcpforge] base URL: https://petstore3.swagger.io/api/v3
 [mcpforge] read-only tools: 3/5 (writes are blocked by default)
 
-$ npx mcpforge-cli inspect --manifest examples/petstore.mcpforge.json
+$ npx @x123martin/mcpforge-cli inspect --manifest examples/petstore.mcpforge.json
 [mcpforge] MCP endpoint: http://127.0.0.1:7331/mcp
 [mcpforge] inspector:    http://127.0.0.1:7331
 ```
@@ -58,7 +58,7 @@ MCPForge does the boring part in one command and puts a security layer in front 
 ### 1. Generate a server from an OpenAPI document
 
 ```bash
-npx mcpforge-cli init ./openapi.yaml
+npx @x123martin/mcpforge-cli init ./openapi.yaml
 ```
 
 `init` auto-detects `openapi.yaml`, `openapi.json`, `swagger.json` and common variants when no path is given.
@@ -66,7 +66,7 @@ npx mcpforge-cli init ./openapi.yaml
 ### 2. Inspect and try the tools locally
 
 ```bash
-npx mcpforge-cli inspect
+npx @x123martin/mcpforge-cli inspect
 ```
 
 The inspector lists every exposed tool, shows its JSON Schema and lets you call the upstream API from the browser.
@@ -82,7 +82,7 @@ The inspector lists every exposed tool, shows its JSON Schema and lets you call 
       "command": "npx",
       "args": [
         "-y",
-        "mcpforge-cli",
+        "@x123martin/mcpforge-cli",
         "serve",
         "--manifest",
         "mcpforge.json",
@@ -100,7 +100,7 @@ The inspector lists every exposed tool, shows its JSON Schema and lets you call 
 **Streamable HTTP:**
 
 ```bash
-npx mcpforge-cli serve --http --port 7331
+npx @x123martin/mcpforge-cli serve --http --port 7331
 ```
 
 ```json
