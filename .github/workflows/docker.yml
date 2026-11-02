@@ -1,0 +1,68 @@
+name: Docker image
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-image-release
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm test
+
+  publish:
+    if: github.repository == 'mpinedaj/mcpforge'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write
+    env:
+      MCPFORGE_IMAGE: ghcr.io/mpinedaj/mcpforge
+      RELEASE_TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Build release image
+        run: |
+          docker build --tag "$MCPFORGE_IMAGE:$RELEASE_TAG" --tag "$MCPFORGE_IMAGE:latest" \
+            --label org.opencontainers.image.source=https://github.com/mpinedaj/mcpforge .
+      - name: Smoke test release image
+        run: |
+          docker run -d --init --name mcpforge-release-smoke --network none "$MCPFORGE_IMAGE:$RELEASE_TAG"
+          docker exec -i mcpforge-release-smoke node --input-type=module < packages/cli/test/docker-smoke.mjs
+      - name: Log in to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push tested image tags
+        run: |
+          docker push "$MCPFORGE_IMAGE:$RELEASE_TAG"
+          docker push "$MCPFORGE_IMAGE:latest"
+      - name: Container logs and cleanup
+        if: always()
+        run: |
+          docker logs mcpforge-release-smoke || true
+          docker rm -f mcpforge-release-smoke || true

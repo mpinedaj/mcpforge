@@ -25,3 +25,23 @@ jobs:
       - run: npm run build
       - run: npm run typecheck
       - run: npm test
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Build runtime image
+        run: docker build -t mcpforge:ci .
+      - name: Smoke test packaged runtime
+        run: |
+          docker run -d --name mcpforge-smoke --network none mcpforge:ci
+          docker exec -i mcpforge-smoke node --input-type=module < packages/cli/test/docker-smoke.mjs
+      - name: Container logs and cleanup
+        if: always()
+        run: |
+          docker logs mcpforge-smoke || true
+          docker rm -f mcpforge-smoke || true

@@ -124,6 +124,24 @@ npm test
 npm run demo
 ```
 
+### Docker
+
+Version-tag pushes (`v*`) publish the runtime image as `ghcr.io/mpinedaj/mcpforge:<tag>` and `:latest` after the build, typecheck, tests and container smoke check pass. The image is available only after the first successful publication; the maintainer must make the GHCR package public for anonymous pulls.
+
+```bash
+docker pull ghcr.io/mpinedaj/mcpforge:latest
+docker run --rm -p 127.0.0.1:7331:7331 ghcr.io/mpinedaj/mcpforge:latest
+```
+
+Open <http://127.0.0.1:7331> for the inspector. The default command serves the bundled Petstore demo manifest; tool calls use that manifest's upstream API. To use your own API, mount your generated manifest/config and pass the `serve` flags below. For a fixed version, replace `latest` with a published tag such as `v0.2.0`.
+
+To build from a checkout before an image is published:
+
+```bash
+docker build -t mcpforge:local .
+docker run --rm -p 127.0.0.1:7331:7331 mcpforge:local
+```
+
 ## Features
 
 - **OpenAPI 3.x → MCP tools** with JSON Schema inputs generated from parameters and request bodies.
